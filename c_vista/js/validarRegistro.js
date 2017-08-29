@@ -1,32 +1,70 @@
-// VALIDAR USUARIO EXISTENTE CON AJAX
+/*=============================================
+VALIDAR USUARIO EXISTENTE AJAX
+=============================================*/
+
+var usuarioExistente = false;
+var emailExistente = false;  //para no hacer el registro si existe  el registro
 $("#usuRegistro").change(function(){
 
-	var usuario =$("#usuRegistro").val();
+	var usuario = $("#usuRegistro").val();
+
 	var datos = new FormData();
-	datos.append("validarUsuario",usuario);
-  // console.log("usuario",usuario);
-	//ejecutando centencia de AJAX
+	datos.append("validarUsuario", usuario);
+
 	$.ajax({
 		url:"c_vista/secciones/ajax.php",
 		method:"POST",
 		data: datos,
-		cache:false,
-		contenType:false,
-		processData:false,
-		succes:function(respuesta){
-			console.log(respuesta);
+		cache: false,
+		contentType: false,
+		processData: false,
+		success:function(respuesta){
+			if (respuesta == 0) {
+				 $("label[for='usuRegistro'] span").html('<p>Este usuario ya existe en la BD</p>');
+				 usuarioExistente = true;
+			}else{
+				$("label[for='usuRegistro'] span").html("");
+				usuarioExistente = false;
+			}
 		}
 
-
 	});
-
-
 
 });
 
 
+/*=============================================
+VALIDAR CORREO EXISTENTE AJAX
+=============================================*/
 
 
+$("#emailRegistro").change(function(){
+
+	var email = $("#emailRegistro").val();
+
+	var datos = new FormData();
+	datos.append("validarEmail", email);
+
+	$.ajax({
+		url:"c_vista/secciones/ajax.php",
+		method:"POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success:function(respuesta){
+			if (respuesta == 0) {
+				 $("label[for='emailRegistro'] span").html('<p>Este email ya existe en la BD</p>');
+				 emailExistente = true;
+			}else{
+				$("label[for='emailRegistro'] span").html("");
+				emailExistente = false;
+			}
+		}
+
+	});
+
+});
 
 
 
@@ -61,6 +99,12 @@ $("#usuRegistro").change(function(){
                     document.querySelector("label[for='usuRegistro']").innerHTML +="<br>No escriba caracteres especiales.";
                     return false;
                   }
+
+									if (usuarioExistente) {
+										document.querySelector("label[for='usuRegistro'] span").innerHTML ="<br><p>Este usuario ya existe en la BD</p>.";
+                    return false;
+									}
+
             }
 
       // validar CAMPO CONTRASEÑA
@@ -88,6 +132,10 @@ $("#usuRegistro").change(function(){
                     document.querySelector("label[for='emailRegistro']").innerHTML +="<br>Escriba correctamente el email.";
                     return false;
                   }
+									if (emailExistente) {
+										document.querySelector("label[for='emailRegistro'] span").innerHTML ="<br><p>Este email ya existe en la BD</p>.";
+                    return false;
+									}
             }
 
             // validar CHEKED terminos

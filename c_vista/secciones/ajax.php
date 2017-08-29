@@ -1,18 +1,50 @@
 <?php
-  require_once "../../b_controlador/controlador.php";
-  require_once "../../a_modelo/crud.php";
+require_once "../../b_controlador/controlador.php";
+require_once "../../a_modelo/crud.php";
 
-  class Ajax{
-    public $validarUusario;
+class Ajax{
 
-    public function validarauarioAjax(){
-      $datos  = $this ->$validarUusario;
-      $respuesta =MvcController::validarUsuarioController($datos);
-    }
-  }
+	public $validarUsuario;
+	public $validarEmail;
 
 
-  $ = new Ajax();
-  $a -> validarUsuario = $_POST["validarUsuario"];
-  $a ->validarUsuaruioAjax();
+	public function validarUsuarioAjax(){
+
+		$datos = $this->validarUsuario;
+
+		$respuesta = MvcController::validarUsuarioController($datos);
+
+		echo $respuesta;
+
+	}
+
+	public function validarEmailAjax(){
+
+		$datos = $this->validarEmail;
+
+		$respuesta = MvcController::validarEmailController($datos);
+
+		echo $respuesta;
+
+	}
+
+}
+ if (isset($_POST["validarUsuario"])) {
+	 $a = new Ajax();
+	 $a -> validarUsuario = $_POST["validarUsuario"]; //viene de AJAX .JS (((datos.append("validarEmail", usuario);)))
+	 $a -> validarUsuarioAjax();
+ }
+
+
+ if (isset($_POST["validarEmail"])) {
+	 $b = new Ajax();
+	 $b -> validarEmail = $_POST["validarEmail"];
+	 $b -> validarEmailAjax();
+ }
+
+
+
+
+
+
  ?>

@@ -17,35 +17,6 @@
       include $respuesta;
     }
 
-    // REGISTRO DE USUARIOS
-          // public function registroUsuarioController(){
-          //     if(isset($_POST["usu"])){
-          //       #PREG_match = realiza una comparacion con una expresion regular
-          //     if (preg_match('/^[a-zA-Z0-9]+$/',$_POST["usu"]) &&
-          //         preg_match('/^[a-zA-Z0-9]+$/',$_POST["contra"]) &&
-          //         preg_match('/^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/',$_POST["email"]))  {
-          //               #CRYPT =encripta el string en algoritmos alternativos basados en DES Unix.
-          //                	$encriptar = crypt($_POST["contra"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
-          //               $datosController = array('usuario' => $_POST["usu"],
-          //                                        'password' => $encriptar,
-          //                                        'email' => $_POST["email"]);
-          //                             //enviando datos al modelo
-          //                       if ($datosController['usuario'] =="" || $datosController['password'] =="" ) { //si los campos vacios
-          //                         header("location:index.php?action=no");
-          //                       }else {
-          //                             $respuesta = Datos::registroUsuarioModel($datosController,"usuario"); //campos y el nombre de la tablas
-          //                             if ($respuesta == "succes") {
-          //                                header("location:index.php?action=ok");
-          //                             }else {
-          //                               header("location:index.php");
-          //                             }
-          //                       }
-          //              }
-          //     }
-          // }
-
-
-
     public function registroUsuarioController(){
 		if(isset($_POST["usu"])){
 			#preg_match = Realiza una comparación con una expresión regular
@@ -67,42 +38,6 @@
 			}
 		}
 	}
-
-
-
-
-
-
-
-      //INGRESO USUARIOS
-      //  public function ingresoUsuarioController(){
-      //          if(isset($_POST["usuIngreso"])){
-      //              if (preg_match('/^[a-zA-Z0-9]+$/',$_POST["usuIngreso"]) &&
-      //                  preg_match('/^[a-zA-Z0-9]+$/',$_POST["contraIngreso"])){
-       //
-      //                    $encriptar = crypt($_POST["contraIngreso"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
-       //
-      //                    				$datosController = array( "usuario"=>$_POST["usuIngreso"],
-      //                    									                "password"=>$encriptar);
-       //
-      //                    				$respuesta = Datos::ingresoUsuarioModel($datosController, "usuario");
-      //                     if( $_POST["usuIngreso"]=="" || $encriptar==""){
-      //                           header("location:index.php?action=fallo");
-      //                     }else{
-      //                             if($respuesta["usuario"] == $_POST["usuIngreso"] && $respuesta["password"] == $encriptar){
-      //                               session_start();
-      //                               $_SESSION["validar"]=true;
-      //                                header("location:index.php?action=usuario");
-      //                             }else{
-      //                                 header("location:index.php?action=fallo");
-      //                             }
-      //                     }
-      //               }
-      //          }
-       //
-      //  }
-
-
 
        #INGRESO DE USUARIOS
 	#------------------------------------
@@ -172,15 +107,6 @@
 		}
 
 	}
-
-
-
-
-
-
-
-
-
 
 
 
@@ -256,6 +182,36 @@
                 }
              }
        }
+
+        //VALIDAR USUARIO EXISTENTE AJAX
+
+        public function validarUsuarioController($validarUsuario){
+          $datosController = $validarUsuario;
+          $respuesta = Datos::validarUsuarioModel($datosController,"usuario");
+
+          #si existe al menos un  registro (cuenta caracteres) si existe caracteres?)
+          if (count($respuesta["usuario"]) > 0) {
+              echo 0;
+          }else{
+            echo 1;
+          }
+        }
+
+        //VALIDAR EMAIL EXISTENTE AJAX
+
+        public function validarEmailController($validarEmail){
+          $datosController = $validarEmail;
+          $respuesta = Datos::validarEmailModel($datosController,"usuario");
+
+          #si existe al menos un  registro (cuenta caracteres) si existe caracteres?)
+          if (count($respuesta["email"]) > 0) {
+              echo 0;
+          }else{
+            echo 1;
+          }
+        }
+
+
 
   }
 
